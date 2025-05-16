@@ -2,9 +2,33 @@ const gameboard = {
     gameboardValues: [],
 }
 
-const players = {
-    
-}
+const initPlayers = (function() {
+    const players = {
+        // createPlayers populates the players object
+        // with player1 and player2 objects.
+    }
+
+    function createPlayers(name) {
+        if (!('player1' in players)) {      // If player1 doesn't exist, create it
+            players.player1 = {};           // If it does, create player1.
+            players.player1.name = name;
+            players.player1.token = 'X';
+        }
+
+        else {
+            players.player2 = {};
+            players.player2.name = name;
+            players.player2.token = '0';
+        }
+    }
+
+    return {
+        createPlayers,
+        players, // This is only here so I can check the values from the console
+    }
+
+})();
+
 
 const gameplay = {
 
@@ -41,7 +65,7 @@ const gameplay = {
         // And then I'll have a function that updates the
         // name key? Like:
             // const players = {
-            //     player1: {name: name, token: 'X'},
-            //     player2: {name: name, token: 'O'},
+            //     player1: {name: '', token: 'X'},
+            //     player2: {name: '', token: 'O'},
             // }
             // and then do players.player1.name = 'whatever'
