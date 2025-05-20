@@ -1,0 +1,12 @@
+#gameboard-container {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+}
+
+#gameboard-container div {
+    border: black solid 1px;
+    display: grid;
+    place-items: center;
+
+}

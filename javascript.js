@@ -24,7 +24,7 @@ const go = (function() {
         gameboardInterface: ['', '', '', '', '', '', '', '', ''],
     }
 
-    function placeToken() {
+    function placeMarker() {
         gameboard.gameboardInterface[0] = 'X';
         gameboard.gameboardInterface[1] = 'X';
         gameboard.gameboardInterface[2] = 'X';
@@ -41,9 +41,22 @@ const go = (function() {
         
     }
 
+    const gameboardContainer = document.querySelector('#gameboard-container');
+
+    // gameboard.gameboardInterface.forEach(item => {
+    //     const markerSquare = document.createElement('div');
+    //     markerSquare.textContent = item;
+    //     gameboardContainer.appendChild(markerSquare);
+        // I think it would be cleanest to just initilize the empty board
+        // in my HTML, do CSS grid to get some nice squares, put all this 
+        // in a function, then run that function on click.
+        // Perhaps this would even go within the placeMarker function that
+        // needs to run on click.
+    // })
+
     return {
         createPlayers,
-        placeToken,
+        placeMarker,
         players,
         gameboard,
     }
