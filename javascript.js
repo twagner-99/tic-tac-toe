@@ -1,8 +1,4 @@
-const gameboard = {
-    gameboardValues: [],
-}
-
-const initPlayers = (function() {
+const go = (function() {
     const players = {
         // createPlayers populates the players object
         // with player1 and player2 objects.
@@ -20,11 +16,36 @@ const initPlayers = (function() {
             players.player2.name = name;
             players.player2.token = '0';
         }
+
+        // Add code to prohibit more than two players
+    }
+
+    const gameboard = {
+        gameboardInterface: ['', '', '', '', '', '', '', '', ''],
+    }
+
+    function placeToken() {
+        gameboard.gameboardInterface[0] = 'X';
+        gameboard.gameboardInterface[1] = 'X';
+        gameboard.gameboardInterface[2] = 'X';
+
+        if (gameboard.gameboardInterface[0] === gameboard.gameboardInterface[1] && 
+            gameboard.gameboardInterface[0] === gameboard.gameboardInterface[2] && 
+            gameboard.gameboardInterface[0] !== '') {
+            console.log('WINNER');
+        }
+
+        if (gameboard.gameboardInterface[2] !== '') {
+            console.log('Cannot place marker in a space that is already taken');
+        }
+        
     }
 
     return {
         createPlayers,
-        players, // This is only here so I can check the values from the console
+        placeToken,
+        players,
+        gameboard,
     }
 
 })();
@@ -36,7 +57,10 @@ const gameplay = {
 
 // GAME FUNCTIONALITY - CONSOLE ONLY, NO DOM LOGIC YET
 // We need to create a gameboard
-    // To do this, we will push Xs or Os into an array
+    // To do this, we will append Xs or Os into to array,
+    // not push. If pushed, we wouldn't have a grid game board
+    // because each turn the token would just be added to the 
+    // end of the array.
         // No clue why an array is recommended for this over
         // an object similar to something like this, and then
         // to update we could just do gameboard.space1 = whatever:
