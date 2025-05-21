@@ -21,13 +21,14 @@ const go = (function() {
     }
 
     const gameboard = {
-        gameboardInterface: ['', '', '', '', '', '', '', '', ''],
+        gameboardInterface: ['', '', 'X', '', '', '', '', '', ''],
     }
+    
+    // let [topLeft, topMid, topRight, midLeft, midMid, midRight, botLeft, botMid, botRight] = gameboard.gameboardInterface;
 
     function placeMarker() {
-        gameboard.gameboardInterface[0] = 'X';
-        gameboard.gameboardInterface[1] = 'X';
-        gameboard.gameboardInterface[2] = 'X';
+
+        // if certain div clicked, update with marker
 
         if (gameboard.gameboardInterface[0] === gameboard.gameboardInterface[1] && 
             gameboard.gameboardInterface[0] === gameboard.gameboardInterface[2] && 
@@ -35,24 +36,69 @@ const go = (function() {
             console.log('WINNER');
         }
 
-        if (gameboard.gameboardInterface[2] !== '') {
-            console.log('Cannot place marker in a space that is already taken');
-        }
+        // if (gameboard.gameboardInterface[2] !== '') {
+        //     console.log('Cannot place marker in a space that is already taken');
+        // }
         
     }
 
-    const gameboardContainer = document.querySelector('#gameboard-container');
+    const markerSquares = document.querySelectorAll('#gameboard-container div');
 
-    // gameboard.gameboardInterface.forEach(item => {
-    //     const markerSquare = document.createElement('div');
-    //     markerSquare.textContent = item;
-    //     gameboardContainer.appendChild(markerSquare);
-        // I think it would be cleanest to just initilize the empty board
-        // in my HTML, do CSS grid to get some nice squares, put all this 
-        // in a function, then run that function on click.
-        // Perhaps this would even go within the placeMarker function that
-        // needs to run on click.
+    let i = 0;
+    let markerPlaceCount = 0;
+
+    // markerSquares.forEach(square => {
+    //     square.textContent = gameboard.gameboardInterface[i];
+    //     i++;
     // })
+
+    markerSquares.forEach(square => {
+        square.textContent = gameboard.gameboardInterface[i];
+        i++;
+
+        square.addEventListener('click', (e) => {
+
+            if (e.target.innerText === '') {
+                markerPlaceCount++;
+                console.log(markerPlaceCount);
+                
+                if (markerPlaceCount % 2 !== 0) {   // odd = player1 = X marker
+                    switch(e.target.id) {
+                        case 'top-left':
+                            gameboard.gameboardInterface[0] = 'X';
+                            square.textContent = gameboard.gameboardInterface[0];
+                            break;
+                        case 'top-mid':
+                            gameboard.gameboardInterface[1] = 'X';
+                            square.textContent = gameboard.gameboardInterface[1];
+                            break;
+                        // Need to add other cases.
+                        // This works, but it feels like it sucks.
+                        // I'm confused on how to modularize my functions
+                        // when I need info from the event parameter
+                    }
+                }
+
+                else {
+                    // placeMarker('O');
+                    switch(e.target.id) {
+                        case 'top-left':
+                            gameboard.gameboardInterface[0] = 'O';
+                            square.textContent = gameboard.gameboardInterface[0];
+                            break;
+                        case 'top-mid':
+                            gameboard.gameboardInterface[1] = 'O';
+                            square.textContent = gameboard.gameboardInterface[1];
+                            break;
+                    }
+                }
+            }
+            
+            else {
+                console.log('Cannot place marker in a space that is already taken');
+            }
+        });
+    })
 
     return {
         createPlayers,
@@ -62,11 +108,6 @@ const go = (function() {
     }
 
 })();
-
-
-const gameplay = {
-
-}
 
 // GAME FUNCTIONALITY - CONSOLE ONLY, NO DOM LOGIC YET
 // We need to create a gameboard
@@ -106,3 +147,8 @@ const gameplay = {
             //     player2: {name: '', token: 'O'},
             // }
             // and then do players.player1.name = 'whatever'
+// If a marker is placed (not just a click cuz we don't want to override)
+// increment clickCount.
+    // if count = odd, it's player1 (X)
+    // if count = even, it's player2 (O)
+    // if count = 9 and no winner, draw
